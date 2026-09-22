@@ -1,0 +1,5 @@
+interface:
+  display_name: "月明·对标研究"
+  short_description: "多博主高赞研究、结构蒸馏与商业承接推演"
+  brand_color: "#39EC88"
+  default_prompt: "使用 $moonlit-benchmark-research，基于当前认可范围完成对标研究并标明证据与缺口。"
