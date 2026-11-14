@@ -1,10 +1,10 @@
 # 对标评论区作为需求材料
 
-日常选题默认从已认可的对标账号作品评论中识别目标用户任务；不能用本人作品评论替代。本人账号回流归douyin-extractor，仅作独立补充。用户明确指定博主时建立或沿用本批scope；没有新指定时沿用当前有效且已授权的对标scope。其他作者走授权公共研究、RedFox或现有登录态 Ego 浏览器。服务拒绝保留失败，备用成功不改写原失败；SDK没有的评论方法不能当作接口。
+日常选题默认从已认可的对标账号作品评论中识别目标用户任务；不能用本人作品评论替代。本人账号回流归douyin-extractor，仅作独立补充。用户明确指定博主时建立或沿用本批scope；没有新指定时沿用当前有效且已授权的对标scope。其他作者默认走 RedFox 公开接口（抖音作品数据、小红书/头条评论）和 X 公开只读接口；登录态 Ego 浏览器只在月明本人 Mac 上、经他当次同意才用（团队 Bot 不持有登录态）。服务拒绝保留失败，备用成功不改写原失败；SDK没有的评论方法不能当作接口。
 
 ## 读取与恢复
 
-research-config.json列scope_id、规范主页URL数组profiles及collection预算。日常选题缓存超过7天或未覆盖近期非置顶作品时必须刷新。先读当前ego-browser Skill。在Ego nodejs中import本Skill scripts/collect_comments.mjs，调用run({taskSpace,configPath,output,spaceId})；每轮只创建一个 TaskSpace，并在后续轮次复用同一 `spaceId`。当前空间消失、结束或发生阻断时不得另开空间绕过；按 Ego Skill 停止并请用户恢复/提供可继续的空间。结果为failed/partial或需要用户控制时不调用 `finish()`；只有本轮成功且无需恢复时才关闭空间。参数显式传入，不假定shell环境进入Ego运行时。
+research-config.json列scope_id、规范主页URL数组profiles及collection预算。日常选题缓存超过7天或未覆盖近期非置顶作品时必须刷新。以下 Ego 浏览器步骤只在月明 Mac 上执行：先读当前ego-browser Skill。在Ego nodejs中import本Skill scripts/collect_comments.mjs，调用run({taskSpace,configPath,output,spaceId,allowLoginSource:true})（月明同意后才传）；每轮只创建一个 TaskSpace，并在后续轮次复用同一 `spaceId`。当前空间消失、结束或发生阻断时不得另开空间绕过；按 Ego Skill 停止并请用户恢复/提供可继续的空间。结果为failed/partial或需要用户控制时不调用 `finish()`；只有本轮成功且无需恢复时才关闭空间。参数显式传入，不假定shell环境进入Ego运行时。
 
 读取页面实际收到的公开作品/评论响应，不保存Cookie或签名URL。DOM限定user-post-list，排除SEO页脚和相关推荐。视频sec_uid必须与指定主页一致；有create_time按发布时间排序，置顶不等于最新。只有DOM而无日期时写“可见非置顶样本，最新未核验”。
 
@@ -16,4 +16,4 @@ research-config.json列scope_id、规范主页URL数组profiles及collection预�
 
 collection.json保存事实；demand-signals.json另存scope_id、signals。每项task、interpretation、next_test、audience_cells、capability_cells、reviewed_at、evidence[{video_id,comment_id}]。原文按稳定ID关联集合，不能用不相符的excerpt冒充证据。任务与匹配是编辑判断。
 
-区分具体任务、卡住步骤、实际尝试、泛赞、资源索取、CTA诱导与圈内账号问题。求资料数量不等于独立需求人数；没有去标识评论者依据不报不同用户高频。逐条审读而非关键词评分。选题有本人材料、中文入口和成果验证，不搬博主人设与独特案例；评论只触发受影响组合重审，不自动建作品。已采集、正文齐、已审读、亲测和用户认可分别记录。对标评论里出现的「我用 X 就行」「为什么不用 Y」类原话，单独标为替代方案或反驳证据，供选题卡 L1「现在用的办法」与 L5「反驳」引用；只算有人提出，不算多数人观点。
+区分具体任务、卡住步骤、实际尝试、泛赞、资源索取、CTA诱导与圈内账号问题。求资料数量不等于独立需求人数；没有去标识评论者依据不报不同用户高频。逐条审读而非关键词评分。选题有本人材料、中文入口和成果验证，不搬博主人设与独特案例；评论只触发受影响组合重审，不自动建作品。已采集、正文齐、已审读、亲测和用户认可分别记录。

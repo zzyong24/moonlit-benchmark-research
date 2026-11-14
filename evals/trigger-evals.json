@@ -1,0 +1,20 @@
+[
+ {
+  "skill": "moonlit-benchmark-research",
+  "query": "拆解一下这个对标账号为什么火",
+  "should_trigger": true,
+  "expected": "按采集路由表收集公开数据并分析"
+ },
+ {
+  "skill": "moonlit-benchmark-research",
+  "query": "做一份对标作品的评论需求分析",
+  "should_trigger": true,
+  "expected": "公开评论源；抖音评论只在 Mac 经同意"
+ },
+ {
+  "skill": "moonlit-benchmark-research",
+  "query": "把文章排成公众号预览",
+  "should_trigger": false,
+  "expected": "路由到 moonlit-wechat-publisher"
+ }
+]

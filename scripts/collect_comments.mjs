@@ -94,7 +94,8 @@ export async function resumeIncomplete({taskSpace,output,spaceId,maxPages=120}) 
   return {space_id:task.spaceId,status:current.status}
 }
 async function atomic(file,value){await mkdir(path.dirname(file),{recursive:true});const temp=file+'.tmp';await writeFile(temp,JSON.stringify(value,null,2)+'\n');await rename(temp,file)}
-export async function run({taskSpace,configPath,output,spaceId}) {
+export async function run({taskSpace,configPath,output,spaceId,allowLoginSource=false}) {
+  if(allowLoginSource!==true)throw new Error('登录浏览器采集默认关闭：只在月明本人 Mac 上、经他同意后传 allowLoginSource:true')
   const config=JSON.parse(await readFile(configPath,'utf8'));if(!config.scope_id||!Array.isArray(config.profiles)||config.profiles.length>12||!config.profiles.every(publicProfile))throw new Error('explicit public profile scope required')
   const limits={videos_per_profile:2,max_comment_pages:20,...config.collection};if(limits.videos_per_profile<1||limits.videos_per_profile>5||limits.max_comment_pages<1||limits.max_comment_pages>40)throw new Error('collection budget invalid')
   const task=await taskSpace(spaceId??'对标评论需求采集'),page=task.page('p1')
