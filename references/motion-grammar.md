@@ -1,8 +1,10 @@
 # 动效语法：从对标拆出来的可执行参数
 
+**适用边界**：以下是历史样片的观察记录与候选手法，不是跨模式制作总则。当前工作区、用户本期选择及对应制作 Skill 优先；深色舞台、永动背景、真人常驻小窗、帧0封面、固定事件密度与片长配额均不自动继承。实际证据镜头保留原貌，真人剪辑的开场、头像避让、章节及双语字幕按当前 `moonlit-talking-head-video` 执行。没有原始逐帧证据时，本文历史统计只记“历史报告值，未复测”，不能当本轮实测。
+
 来源：2026-10 逐帧拆解「大师的AI小灶」2 期（Vibe 网站后台、AI 生图底层逻辑）与「柱子哥TzFilm」1 期（千问 Personal Agent），对照本账号《没辞职，AI副业半年变现约5万》。数据见作品库 `资料/对标拆解_2026-10.md`。本文件只写方法和参数，不保存他人素材。
 
-适用：`talking_head_broll` 里所有 MG / Remotion / ChatCut 原生动效 / 图片动作化镜头；`moonlit-html-video`（html_explainer）与 `moonlit-avatar-video`（avatar_explainer）也以本文件为动效语法的唯一来源，各自只写本模式的特例。制作入口的必选层（顶部章节、双语字幕、SFX、CTA）不因本文件改变。
+可供 `talking_head_broll`、`html_explainer` 与 `avatar_explainer` 按本期解释任务参考，不持有各模式的制作状态或强制参数。制作入口的必选层（顶部章节、双语字幕、SFX、CTA）不因本文件改变。
 
 颜色、字体、字号、缓动和音效档位从 `moonlit-content-engine/references/brand-tokens.md` 取值；视频舞台默认用其深色 `night` 主题（深蓝夜底 + 暖白文字 + 亮铜橙强调），本文件不再定义色值。
 
@@ -86,7 +88,7 @@
 
 ## 11. 拆对标的流程（复用）
 
-1. 抖音：共享浏览器打开链接，监听 `/aweme/v1/web/aweme/detail` 响应取 `bit_rate[].play_addr`，`curl -e https://www.douyin.com/` 下载 1080p（分析专用，不入成片）。
+1. 抖音：优先复用已获准的本地参考或公开元数据；确需浏览器时先读 `ego-browser` 并运行 `ego-browser skill`，只用当次获准的 Ego 专用空间。经授权可监听 `/aweme/v1/web/aweme/detail` 响应取 `bit_rate[].play_addr`，`curl -e https://www.douyin.com/` 下载 1080p（分析专用，不入成片）。
 2. 每 1/36 片长取一帧做总览联系表；在转场和动画处每 0.15–0.25 秒取 24 帧做胶片。
 3. 算硬切、运动事件、静止/运动占比、响度。
 4. 每个镜头只回答：说到哪个词时变了什么？靠哪个元素接到下一镜？换个题目能不能用同样方法推出新画面？
